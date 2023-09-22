@@ -1,22 +1,29 @@
-console.log('loaded')
+console.log("loaded");
 
-let rootElement = document.querySelector('#root');
-/* console.log(rootElement) */
+let rootElement = document.querySelector("#root");
 
-/* let htmlContent = "<h2>Hello world</h2>"
+fetch("https://restcountries.com/v3.1/all")
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data); //itt tudunk a kapott adattal dolgozni
+    //a data egy 250 elebol allo array
 
-rootElement.insertAdjacentHTML('beforeend', htmlContent)
- */
-/* let counter = 0;
+    for (let index = 0; index < data.length; index++) {
+      let countryName = data[index].name.common;
+      let countryPop = data[index].population;
+      let countryArea = data[index].area;
 
-while (counter < 20) {
-    rootElement.insertAdjacentHTML('beforeend', htmlContent);
-    counter++; } /* = counter + 1 */
-
-/* let array = ["alma", "körte", "szilva", "eper", "birs", "vegyes"]
-
-for (let index = 0; index < array.lenght; index++) {
-    rootElement.insertAdjacentHTML('beforeend', `<h2> ${array[index]} </h2>`);
-} */
-
-
+      rootElement.insertAdjacentHTML(
+        "beforeend",
+        `
+         <div class="country">
+            <h2> ${countryName} </h2>
+            <p> population: ${countryPop} </p>
+            <p> area: ${countryArea} </p>
+        </div>
+        `
+      );
+    }
+  });
